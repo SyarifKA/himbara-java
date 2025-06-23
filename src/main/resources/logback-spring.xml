@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Create the logs directory if it doesn't exist -->
+    <property name="LOG_DIR" value="logs"/>
+    <!-- Console Appender -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>%d | %7p | %-36.36logger | %-15X{msisdn} | %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    <!-- File Appender -->
+    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_DIR}/debug.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/debug_%d{yyMMdd_HH}.gz</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <!-- <Pattern>%d | %7p | %-15X{msisdn} | %X{trxid} | %m%n</Pattern> -->
+            <Pattern>%d | %X{start_timestamp}| %logger{36} | %X{trxid} | %X{msisdn} | %X{error_code} | %X{duration} | %M:%L | %m%n</Pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+    </appender>
+
+    <root level="info">
+        <!-- <appender-ref ref="STDOUT" /> -->
+        <appender-ref ref="DEBUG" />
+    </root>
+</configuration>
