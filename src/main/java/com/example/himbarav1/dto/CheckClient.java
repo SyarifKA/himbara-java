@@ -8,4 +8,6 @@ public class CheckClient {
     private String phoneNumber;
 
     private String bank;
+
+    private String status = "waiting";
 }

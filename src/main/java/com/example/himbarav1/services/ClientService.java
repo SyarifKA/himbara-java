@@ -33,14 +33,15 @@ public class ClientService {
     @Autowired
     public ClientRepository clientRepository;
 
-    public Client save(CheckClient checkClient) {
+    public Client save(CheckClient checkClient, String sessionId) {
 
         ModelMapper mapper = new ModelMapper();
         Client client = mapper.map(checkClient, Client.class);
+        client.setSessionId(sessionId);
         return clientRepository.save(client);
     }
 
-    public ResponseEntity<String> postToExternalApi(CheckClient dto) {
+    public ResponseEntity<String> postToExternalApi(CheckClient dto, String sessionId) {
         long startTime = System.currentTimeMillis();
 
         try {
@@ -60,7 +61,7 @@ public class ClientService {
             MDC.put("duration", String.valueOf(duration + "ms"));
             logger.info("Request sukses ke endpoint eksternal");
             if (response.getStatusCode().is2xxSuccessful()) {
-                save(dto);
+                save(dto, sessionId);
             }
             return response;
         } catch (Exception e) {

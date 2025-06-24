@@ -6,6 +6,7 @@ import org.slf4j.MDC;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,13 +26,14 @@ public class ClientController {
     }
 
     @PostMapping("/check")
-    public ResponseEntity<String> checkClient(@RequestBody CheckClient checkClient) {
+    public ResponseEntity<String> checkClient(@RequestHeader("X-Session-ID") String sessionId,
+            @RequestBody CheckClient checkClient) {
         // Kirim DTO ke service untuk diteruskan ke endpoint lain
         long startTime = System.currentTimeMillis();
         long duration = System.currentTimeMillis() - startTime; // Calculate duration
         MDC.put("duration", String.valueOf(duration));
         logger.info("Check data user to endpoin whitelist", checkClient);
         MDC.clear();
-        return clientService.postToExternalApi(checkClient);
+        return clientService.postToExternalApi(checkClient, sessionId);
     }
 }

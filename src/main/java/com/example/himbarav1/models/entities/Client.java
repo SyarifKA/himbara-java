@@ -37,6 +37,12 @@ public class Client implements Serializable {
 
     private Integer price;
 
+    @Column(length = 50)
+    private String productId;
+
+    @Column(length = 50)
+    private String sessionId;
+
     @Column(length = 15)
     private String status;
 
