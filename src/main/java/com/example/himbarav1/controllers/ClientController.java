@@ -34,5 +34,4 @@ public class ClientController {
         MDC.clear();
         return clientService.postToExternalApi(checkClient);
     }
-
 }

@@ -2,12 +2,16 @@ package com.example.himbarav1.models.entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,7 +29,7 @@ public class Client implements Serializable {
     @Column(length = 15, nullable = false)
     private String phoneNumber;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20)
     private String bank;
 
     @Column(length = 255)
@@ -36,10 +40,16 @@ public class Client implements Serializable {
     @Column(length = 15)
     private String status;
 
-    @Column(nullable = false, updatable = false)
-    private Timestamp created_at;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP(0)")
+    private LocalDateTime created_at;
 
-    @Column(nullable = false)
+    // @Column(nullable = false)
     private Timestamp updated_at;
+
+    @PrePersist
+    protected void onCreate() {
+        this.created_at = LocalDateTime.now().withNano(0);
+    }
 
 }
