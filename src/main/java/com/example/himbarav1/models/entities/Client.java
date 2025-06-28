@@ -41,6 +41,12 @@ public class Client implements Serializable {
     private String productId;
 
     @Column(length = 50)
+    private String productName;
+
+    @Column(length = 50)
+    private String orderId;
+
+    @Column(length = 50)
     private String sessionId;
 
     @Column(length = 15)

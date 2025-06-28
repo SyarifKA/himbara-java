@@ -41,3 +41,7 @@ logs/
 **/logs/
 **/*.log
 **/*.log.*
+
+# Ignore Spring Boot config files
+src/main/resources/application.properties
+src/main/resources/application.yml
