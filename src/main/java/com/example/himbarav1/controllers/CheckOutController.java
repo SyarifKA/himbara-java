@@ -24,7 +24,7 @@ public class CheckOutController {
     @PostMapping
     public ResponseEntity<String> checkout(
             @RequestHeader("X-Session-ID") String sessionId,
-            @RequestBody CheckOut checkOut) {
+            @RequestBody CheckOut checkOut) throws Exception {
 
         long startTime = System.currentTimeMillis();
         MDC.put("session_id", sessionId);
